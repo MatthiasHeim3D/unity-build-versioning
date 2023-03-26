@@ -1,0 +1,11 @@
+{
+  "name": "com.matthiasheim.unity-build-tools",
+  "version": "1.0.0",
+  "displayName": "Unity Build Tools",
+  "description": "Unity Build Tools",
+  "unity": "2021.3",
+  "author": {
+    "name": "Matthias Heim",
+    "url": "https://github.com/MatthiasHeim3D"
+  }
+}

@@ -1,0 +1,18 @@
+{
+    "name": "unity-build-tools_Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:702ccec1f8b87e54aaa28b421d593283"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
