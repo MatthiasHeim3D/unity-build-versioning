@@ -10,6 +10,7 @@ public class BuildInfo : ScriptableObject
     public int MinorVersion;
     public int PatchVersion;
     public int BuildNumber;
+    public bool AppendVersionToExecutableFileName = true;
 
     public string GetVersion()
     {
