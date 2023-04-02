@@ -2,8 +2,9 @@
   "name": "com.matthiasheim.unity-build-tools",
   "version": "1.0.0",
   "displayName": "Unity Build Tools",
-  "description": "Unity Build Tools",
+  "description": "Unity Build Versioning\r\n\r\nManage build version numbers in your Unity projects. The tool automatically increments the build number each time you build your project, and allows you to easily retrieve the current version number.\r\n\r\nThe version format is based on SemVer: major.minor.patch+build number\r\n\r\nOn each build, the player version setting is automatically updated with the incremented build number.",
   "unity": "2021.3",
+  "documentationUrl": "https://github.com/MatthiasHeim3D/unity-build-tools",
   "author": {
     "name": "Matthias Heim",
     "url": "https://github.com/MatthiasHeim3D"
