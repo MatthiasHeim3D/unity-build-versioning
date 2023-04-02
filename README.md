@@ -4,7 +4,7 @@ Manage build version numbers in your Unity projects. The tool automatically incr
 
 The version format is based on [SemVer](https://semver.org/): major.minor.patch+build number
 
-The build number is incremented automatically on each build.
+On each build, the player version setting is automatically updated with the incremented build number.
 
 ## Getting Started
 
