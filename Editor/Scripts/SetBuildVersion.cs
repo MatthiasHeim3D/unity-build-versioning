@@ -29,7 +29,7 @@ public class SetBuildVersion : IPreprocessBuildWithReport
         }
     }
 
-    [PostProcessBuild(1)]
+    [PostProcessBuild]
     public static void OnPostProcessBuild(BuildTarget target, string pathToExecutable)
     {
         if (GetBuildInfo(out BuildInfo buildInfo))
