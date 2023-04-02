@@ -62,7 +62,7 @@ public class SetBuildVersion : IPreprocessBuildWithReport
                 string directory = Path.GetDirectoryName(pathToBuiltProject);
                 string executableName = Path.GetFileNameWithoutExtension(pathToBuiltProject);
                 string extension = Path.GetExtension(pathToBuiltProject);
-                string executableWithBuildNumber = $"{executableName}_{buildInfo.GetVersion()}{extension}";
+                string executableWithBuildNumber = $"{executableName}_v{buildInfo.GetVersion()}{extension}";
 
                 File.Move(pathToBuiltProject, Path.Combine(directory, executableWithBuildNumber));
             }
