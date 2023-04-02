@@ -1,13 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
+using System;
 using System.IO;
 using UnityEditor;
 using UnityEditor.Build;
 using UnityEditor.Build.Reporting;
 using UnityEditor.Callbacks;
 using UnityEngine;
-using Debug = UnityEngine.Debug;
 
 public class SetBuildVersion : IPreprocessBuildWithReport
 {
@@ -15,30 +12,60 @@ public class SetBuildVersion : IPreprocessBuildWithReport
 
     public void OnPreprocessBuild(BuildReport report)
     {
-        PreprocessBuild();
-    }
-
-    static void PreprocessBuild()
-    {
         if (GetBuildInfo(out BuildInfo buildInfo))
         {
             buildInfo.IncrementBuildNumber();
 
-            PlayerSettings.bundleVersion = buildInfo.GetVersion();
+            PlayerSettings.bundleVersion = buildInfo.GetVersionString();
 
             EditorUtility.SetDirty(buildInfo);
             AssetDatabase.SaveAssets();
+
+            Debug.Log($"Build Version: {buildInfo.GetVersionString()}");
         }
         else
         {
-            Debug.LogWarning("No BuildInfo Asset found.");
+            Debug.Log("No BuildInfo Asset found.");
+        }
+    }
+
+    [PostProcessBuild(1)]
+    public static void OnPostProcessBuild(BuildTarget target, string pathToExecutable)
+    {
+        if (GetBuildInfo(out BuildInfo buildInfo))
+        {
+            if (buildInfo.CreateVersionTxtFileNextToExecutable)
+            {
+                RemovePreviousVersionTxt(pathToExecutable);
+                CreateCurrentVersionTxt(pathToExecutable);
+            }
+        }
+    }
+
+    private static void RemovePreviousVersionTxt(string pathToExecutable)
+    {
+        string directory = Path.GetDirectoryName(pathToExecutable);
+        var versionFile = Directory.GetFiles(directory, "version_*.*.*+*.txt");
+
+        if (versionFile.Length > 0)
+        {
+            File.Delete(versionFile[0]);
+        }
+    }
+
+    private static void CreateCurrentVersionTxt(string pathToExecutable)
+    {
+        if (GetBuildInfo(out BuildInfo buildInfo))
+        {
+            string directory = Path.GetDirectoryName(pathToExecutable);
+            string currentVersionTxtPath = Path.Combine(directory, $"version_{buildInfo.GetVersionString()}.txt");
+
+            File.Create(currentVersionTxtPath).Close();
         }
     }
 
     static bool GetBuildInfo(out BuildInfo buildInfo)
     {
-        Debug.Log("Searching BuildInfo");
-
         string[] buildInfoPath = AssetDatabase.FindAssets("t:BuildInfo", null);
 
         if (buildInfoPath.Length > 0)
@@ -49,27 +76,5 @@ public class SetBuildVersion : IPreprocessBuildWithReport
 
         buildInfo = null;
         return false;
-    }
-
-    [PostProcessBuild(1)]
-    public static void OnPostProcessBuild(BuildTarget target, string pathToBuiltProject)
-    {
-        if (GetBuildInfo(out BuildInfo buildInfo))
-        {
-            // TODO: Remove previous exe if there is one, as it is now not overwritten
-            if (buildInfo.AppendVersionToExecutableFileName)
-            {
-                string directory = Path.GetDirectoryName(pathToBuiltProject);
-                string executableName = Path.GetFileNameWithoutExtension(pathToBuiltProject);
-                string extension = Path.GetExtension(pathToBuiltProject);
-                string executableWithBuildNumber = $"{executableName}_v{buildInfo.GetVersion()}{extension}";
-
-                File.Move(pathToBuiltProject, Path.Combine(directory, executableWithBuildNumber));
-            }
-        }
-        else
-        {
-            Debug.LogWarning("No BuildInfo Asset found.");
-        }
     }
 }

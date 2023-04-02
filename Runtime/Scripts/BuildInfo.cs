@@ -10,9 +10,9 @@ public class BuildInfo : ScriptableObject
     public int MinorVersion;
     public int PatchVersion;
     public int BuildNumber;
-    public bool AppendVersionToExecutableFileName = true;
+    public bool CreateVersionTxtFileNextToExecutable = true;
 
-    public string GetVersion()
+    public string GetVersionString()
     {
         return $"{MajorVersion}.{MinorVersion}.{PatchVersion}+{BuildNumber}";
     }
