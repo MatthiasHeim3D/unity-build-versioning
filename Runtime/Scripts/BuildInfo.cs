@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Scriptable Objects/Build Info")]
@@ -11,6 +8,7 @@ public class BuildInfo : ScriptableObject
     public int PatchVersion;
     public int BuildNumber;
     public bool CreateVersionTxtFileNextToExecutable = true;
+    public bool AppendDevelopmentOrReleaseToVersion = true;
 
     public string GetVersionString()
     {

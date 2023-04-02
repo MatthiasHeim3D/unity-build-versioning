@@ -37,7 +37,7 @@ public class SetBuildVersion : IPreprocessBuildWithReport
             if (buildInfo.CreateVersionTxtFileNextToExecutable)
             {
                 RemovePreviousVersionTxt(pathToExecutable);
-                CreateCurrentVersionTxt(pathToExecutable);
+                CreateCurrentVersionTxt(pathToExecutable, target);
             }
         }
     }
@@ -53,12 +53,17 @@ public class SetBuildVersion : IPreprocessBuildWithReport
         }
     }
 
-    private static void CreateCurrentVersionTxt(string pathToExecutable)
+    private static void CreateCurrentVersionTxt(string pathToExecutable, BuildTarget target)
     {
         if (GetBuildInfo(out BuildInfo buildInfo))
         {
             string directory = Path.GetDirectoryName(pathToExecutable);
-            string currentVersionTxtPath = Path.Combine(directory, $"version_{buildInfo.GetVersionString()}.txt");
+            string debugOrRelease = string.Empty;
+            
+            if(buildInfo.AppendDevelopmentOrReleaseToVersion)
+                debugOrRelease = EditorUserBuildSettings.development ? "_development" : "_release";
+
+            string currentVersionTxtPath = Path.Combine(directory, $"version_{buildInfo.GetVersionString()}{debugOrRelease}.txt");
 
             File.Create(currentVersionTxtPath).Close();
         }
