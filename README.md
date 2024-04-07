@@ -1,3 +1,6 @@
+> [!WARNING]
+> Archived in favour of [SuperUnityBuild](https://github.com/superunitybuild/buildtool)
+
 # Unity Build Versioning
 
 Manage build version numbers in your Unity projects. The tool automatically increments the build number each time you build your project, and allows you to easily retrieve the current version number.
